@@ -4,7 +4,7 @@
 import dash
 from dash import dcc
 
-dash.register_page(__name__, title="")
+dash.register_page(__name__)
 
 
 def layout():

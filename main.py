@@ -16,7 +16,17 @@ app = Dash(
     update_title="Refreshing Dash Data Tables ...",
     use_pages=True,
     suppress_callback_exceptions=True,
-    external_stylesheets=[dbc.themes.SKETCHY],
+    external_stylesheets=[
+        dbc.themes.SKETCHY,
+        "assets/datatables.min.css",
+    ],
+    external_scripts=[
+        "assets/datatables.min.js",
+        "assets/ag-grid-community.min.js",
+        "assets/xlsx.full.min.js",
+        "assets/jspdf.min.js",
+        "assets/jspdf.plugin.autotable.js",
+    ],
     meta_tags=[
         {"charset": "utf-8"},
         {"name": "viewport", "content": "width=device-width, initial-scale=1, shrink-to-fit=no"},
@@ -47,10 +57,38 @@ nav_bar = dbc.NavbarSimple(
     links_left=True,
     style={"height": "50px"},
     children=[
-        dbc.NavItem(dbc.NavLink("Table", href="/table")),
-        dbc.NavItem(dbc.NavLink("Datatable", href="/datatable")),
-        dbc.NavItem(dbc.NavLink("Tabulator", href="/tabulator")),
-        dbc.NavItem(dbc.NavLink("AG-Grid", href="/aggrid")),
+        dbc.NavItem(
+            dbc.NavLink(
+                "Table",
+                id="main_menu_table",
+                href="/table",
+                active="exact",
+            )
+        ),
+        dbc.NavItem(
+            dbc.NavLink(
+                "Datatable",
+                id="main_menu_datatable",
+                href="/datatable",
+                active="exact",
+            )
+        ),
+        dbc.NavItem(
+            dbc.NavLink(
+                "Tabulator",
+                id="main_menu_tabulator",
+                href="/tabulator",
+                active="exact",
+            )
+        ),
+        dbc.NavItem(
+            dbc.NavLink(
+                "AG-Grid",
+                id="main_menu_aggrid",
+                href="/aggrid",
+                active="exact",
+            )
+        ),
     ],
 )
 
@@ -60,10 +98,56 @@ app.layout = dbc.Container(
         nav_bar,
         page_container,
     ],
-    id="main_root",
-    fluid=True,
-    style={"margin": "0px", "padding": "0px", "height": "100vh", "width": "100hw"},
 )
+
+
+app.clientside_callback(
+    """
+        $(document).ready(function () {
+            $("#data_tables").DataTable();
+        });
+    """,
+    [
+        Output("data_tables", "n_clicks"),
+    ],
+    [
+        Input("data_tables", "loading_state"),
+    ],
+    [
+        State("data_tables", "n_clicks"),
+    ],
+)
+
+
+app.clientside_callback(
+    """
+        function aggrid_show(loading_state, n_clicks) {
+            const gridOptions = {
+                columnDefs: [
+                    { field: "make" },
+                    { field: "model" },
+                    { field: "price" }
+                ],
+                rowData: [
+                    { make: "Toyota", model: "Celica", price: 35000 },
+                    { make: "Ford", model: "Mondeo", price: 32000 },
+                    { make: "Porsche", model: "Boxster", price: 72000 }
+                ]
+            };
+            new agGrid.Grid(document.querySelector("#ag_grid"), gridOptions);
+        }
+    """,
+    [
+        Output("ag_grid", "n_clicks"),
+    ],
+    [
+        Input("ag_grid", "loading_state"),
+    ],
+    [
+        State("ag_grid", "n_clicks"),
+    ],
+)
+
 
 self_name = os.path.basename(__file__)[:-3]
 if len(os.sys.argv) == 1:
