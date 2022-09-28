@@ -62,7 +62,7 @@ nav_bar = dbc.NavbarSimple(
                 "Table",
                 id="main_menu_table",
                 href="/table",
-                active="exact",
+                active=True,
             )
         ),
         dbc.NavItem(
@@ -70,7 +70,15 @@ nav_bar = dbc.NavbarSimple(
                 "Datatable",
                 id="main_menu_datatable",
                 href="/datatable",
-                active="exact",
+                active=True,
+            )
+        ),
+        dbc.NavItem(
+            dbc.NavLink(
+                "GO Table",
+                id="main_menu_gotable",
+                href="/gotable",
+                active=True,
             )
         ),
         dbc.NavItem(
@@ -78,7 +86,7 @@ nav_bar = dbc.NavbarSimple(
                 "Tabulator",
                 id="main_menu_tabulator",
                 href="/tabulator",
-                active="exact",
+                active=True,
             )
         ),
         dbc.NavItem(
@@ -86,7 +94,7 @@ nav_bar = dbc.NavbarSimple(
                 "AG-Grid",
                 id="main_menu_aggrid",
                 href="/aggrid",
-                active="exact",
+                active=True,
             )
         ),
     ],
