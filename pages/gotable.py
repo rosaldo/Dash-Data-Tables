@@ -14,11 +14,27 @@ def layout():
     df = pd.read_csv("https://git.io/Juf1t")
     return dcc.Graph(
         figure=go.Figure(
+            layout=dict(
+                margin={"l": 1, "r": 1, "t": 1, "b": 1},
+            ),
             data=[
                 go.Table(
-                    header=dict(values=["A Scores", "B Scores"]),
-                    cells=dict(values=[[100, 90, 80, 90], [95, 85, 75, 95]]),
+                    header=dict(
+                        values=df.columns,
+                        fill_color="#000",
+                        line_color="#000",
+                        align="center",
+                        font=dict(color="#fff", size=16),
+                        height=30,
+                    ),
+                    cells=dict(
+                        values=df.transpose().values,
+                        fill_color=[["#eee", "#aaa"] * (len(df.transpose().values) - 1)],
+                        line_color="#000",
+                        font=dict(color="#000", size=14),
+                        height=30,
+                    ),
                 )
-            ]
+            ],
         )
     )
