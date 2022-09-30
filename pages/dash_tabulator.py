@@ -3,20 +3,13 @@
 
 
 import dash
-import dash_bootstrap_components as dbc
-from dash import dcc, html
+
 from dash_tabulator import DashTabulator
 
-dash.register_page(__name__, path_template="/tabulator", title="Dash Tabulator")
+dash.register_page(__name__, path_template="/dash_tabulator", title="Dash Tabulator")
 
 
 def layout():
-    styles = {
-        "pre": {
-            "border": "thin lightgrey solid",
-            "overflowX": "scroll",
-        },
-    }
     columns = [
         {"title": "Name", "field": "name", "width": 150, "headerFilter": True, "editor": "input"},
         {"title": "Age", "field": "age", "hozAlign": "left", "formatter": "progress"},
