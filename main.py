@@ -121,18 +121,16 @@ app.layout = dbc.Container(
 
 app.clientside_callback(
     """
-        $(document).ready(function () {
-            $("#data_tables").DataTable();
-        });
+        function html_table(loading_state) {
+            new DataTable(document.querySelector("#data_tables"));
+            return([0]);
+        }
     """,
     [
         Output("data_tables", "n_clicks"),
     ],
     [
         Input("data_tables", "loading_state"),
-    ],
-    [
-        State("data_tables", "n_clicks"),
     ],
 )
 
