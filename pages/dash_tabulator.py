@@ -3,6 +3,8 @@
 
 
 import dash
+import dash_bootstrap_components as dbc
+from dash import html
 
 from dash_tabulator import DashTabulator
 
@@ -44,11 +46,16 @@ def layout():
     options = {"groupBy": "col", "selectable": 1}
     downloadButtonType = {"css": "btn btn-primary", "text": "Export to xlsx", "type": "xlsx"}
     clearFilterButtonType = {"css": "btn btn-outline-dark", "text": "Clear Filters"}
-    return DashTabulator(
-        id="tabulator",
-        columns=columns,
-        data=data,
-        options=options,
-        downloadButtonType=downloadButtonType,
-        clearFilterButtonType=clearFilterButtonType,
+    return dbc.Row(
+        children=[
+            DashTabulator(
+                id="dash_tabulator_table",
+                columns=columns,
+                data=data,
+                options=options,
+                downloadButtonType=downloadButtonType,
+                clearFilterButtonType=clearFilterButtonType,
+            ),
+            html.Div(id="dash_tabulator_div"),
+        ]
     )

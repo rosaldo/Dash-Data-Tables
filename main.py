@@ -255,6 +255,18 @@ app.clientside_callback(
 )
 
 
+@app.callback(
+    [
+        Output("dash_tabulator_div", "children"),
+    ],
+    [
+        Input("dash_tabulator_table", "dataFiltered"),
+    ],
+)
+def dash_tabulator_filtering(dataFiltered):
+    return [str(dataFiltered)]
+
+
 self_name = os.path.basename(__file__)[:-3]
 if len(os.sys.argv) == 1:
     app.run(host="127.0.0.1", port="8888", debug=True)
